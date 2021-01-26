@@ -57,7 +57,7 @@ public class PlayActivity extends AppCompatActivity {
 
             @Override
             public void onSurfaceChanged(GL10 gl10, int i, int i1) {
-
+                mShape.setSurfaceSize(i, i1);
             }
 
             @Override
@@ -72,10 +72,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     static final float PX_PER_DEGREES = 25;
-    // Touch input won't change the pitch beyond +/- 45 degrees. This reduces awkward situations
-    // where the touch-based pitch and gyro-based pitch interact badly near the poles.
-    static final float MAX_PITCH_DEGREES = 45;
-    // With every touch event, update the accumulated degrees offset by the new pixel amount.
+    static final float MAX_PITCH_DEGREES = 90;
     private final PointF previousTouchPointPx = new PointF();
     private final PointF accumulatedTouchOffsetDegrees = new PointF();
     @Override
@@ -94,10 +91,7 @@ public class PlayActivity extends AppCompatActivity {
                 float r = 0;  // Copy volatile state.
                 float cr = (float) Math.cos(r);
                 float sr = (float) Math.sin(r);
-                // To convert from screen space to the 3D space, we need to adjust the drag vector based
-                // on the roll of the phone. This is standard rotationMatrix(roll) * vector math but has
-                // an inverted y-axis due to the screen-space coordinates vs GL coordinates.
-                // Handle yaw.
+
                 accumulatedTouchOffsetDegrees.x -= cr * touchX - sr * touchY;
                 // Handle pitch and limit it to 45 degrees.
                 accumulatedTouchOffsetDegrees.y += sr * touchX + cr * touchY;

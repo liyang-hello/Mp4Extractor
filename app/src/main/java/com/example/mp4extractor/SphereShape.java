@@ -17,7 +17,7 @@ public class SphereShape {
 
     int SECTOR = 40;
     int STACK = 40;
-    float RADIUS = 1;
+    float RADIUS = 50;
 
     private int mTextureId = 0;
     private int mProgram = -1;
@@ -65,8 +65,7 @@ public class SphereShape {
 
         Matrix.setIdentityM(mModelMatrix, 0);
         float ratio = 9.0f/16;
-//        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 0.1f, 100);
-        Matrix.perspectiveM(mProjectionMatrix, 0, 60, ratio, 0.1f, 100);
+        Matrix.perspectiveM(mProjectionMatrix, 0, 70, ratio, 0.1f, 100);
         // create program
         mProgram = GLUtil.createProgram(VERTEX_SHADER, FRAGMENT_SHADER);
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "a_Position");
@@ -75,89 +74,8 @@ public class SphereShape {
         LogU.d("init mTexCoordHandle "+ mTexCoordHandle);
 
         genVBO2(SECTOR, STACK, RADIUS);
-    }
-
-    private void genVBO(int sectorCount, int stackCount, float radius) {
-        int count = (sectorCount+1) * (stackCount+1);
-        ByteBuffer vbb = ByteBuffer.allocateDirect(count * 3 * 4);
-        vbb.order(ByteOrder.nativeOrder());
-        mVertices = vbb.asFloatBuffer();
-        mVertices.position(0);
-        ByteBuffer tbb = ByteBuffer.allocateDirect(count * 2 * 4);
-        tbb.order(ByteOrder.nativeOrder());
-        mTexCoord = tbb.asFloatBuffer();
-        mTexCoord.position(0);
-
-        float x, y, z, xy;                              // vertex position
-        float s, t;                                     // vertex texCoord
-
-        float sectorStep = (float)(2 * Math.PI / sectorCount);
-        float stackStep = (float)( Math.PI / stackCount);
-        float sectorAngle, stackAngle;
-
-        for(int i = 0; i < stackCount; ++i)
-        {
-            stackAngle = (float) Math.PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
-            xy =(float)(radius * Math.cos(stackAngle));             // r * cos(u)
-            z = (float)(radius * Math.sin(stackAngle));              // r * sin(u)
-
-            // add (sectorCount+1) vertices per stack
-            // the first and last vertices have same position and normal, but different tex coords
-            for(int j = 0; j <= sectorCount; ++j) {
-                sectorAngle = j * sectorStep;           // starting from 0 to 2pi
-
-                // vertex position (x, y, z)
-                x =(float)( xy * Math.cos(sectorAngle));             // r * cos(u) * cos(v)
-                y = (float)( xy * Math.sin(sectorAngle));             // r * cos(u) * sin(v)
-                mVertices.put(x);
-                mVertices.put(y);
-                mVertices.put(z);
-
-                // vertex tex coord (s, t) range between [0, 1]
-                s = (float)j / sectorCount;
-                t = (float)i / stackCount;
-                mTexCoord.put(s);
-                mTexCoord.put(t);
-            }
-        }
-        mVertices.position(0);
-        mTexCoord.position(0);
-
-        // generate CCW index list of sphere triangles
-        // k1--k1+1
-        // |  / |
-        // | /  |
-        // k2--k2+1
-        ByteBuffer ibb = ByteBuffer.allocateDirect(stackCount*sectorCount * 6 * 2);
-        ibb.order(ByteOrder.nativeOrder());
-        mIndices = ibb.asShortBuffer();
-        mIndices.position(0);
-        short k1, k2;
-        for(int i = 0; i < stackCount; ++i)
-        {
-            k1 = (short)(i * (sectorCount + 1));     // beginning of current stack
-            k2 = (short)(k1 + sectorCount + 1);      // beginning of next stack
-
-            for(int j = 0; j < sectorCount; ++j, ++k1, ++k2) {
-                // 2 triangles per sector excluding first and last stacks
-                // k1 => k2 => k1+1
-                if(i != 0) {
-                    mIndices.put(k1);
-                    mIndices.put(k2);
-                    mIndices.put((short)( k1 + 1));
-                }
-
-                // k1+1 => k2 => k2+1
-                if(i != (stackCount-1)) {
-                    mIndices.put((short)( k1 + 1));
-                    mIndices.put(k2);
-                    mIndices.put((short)( k1 + 1));
-                }
-
-            }
-        }
-        LogU.d("mIndices "+ mIndices);
-        mIndices.position(0);
+        setPitchOffset(90);
+        setYawOffset(0);
     }
 
     private Point caculatePoint(int i, int j, float sectorStep, float stackStep, float radius, int sectorCount, int stackCount) {
@@ -208,7 +126,7 @@ public class SphereShape {
                 for(int k=0; k<indices.length; k++) {
                     mVertices.put(p[indices[k]].x);
                     mVertices.put(p[indices[k]].y);
-                    mVertices.put(p[indices[k]].z-1);
+                    mVertices.put(p[indices[k]].z);
 
                     mTexCoord.put(p[indices[k]].u);
                     mTexCoord.put(p[indices[k]].v);
@@ -220,6 +138,10 @@ public class SphereShape {
 
     }
 
+    public void setSurfaceSize(int with, int height) {
+        float ratio = (float) with/height;
+        Matrix.perspectiveM(mProjectionMatrix, 0, 70, ratio, 0.1f, 100);
+    }
 
     public void setTextureId(int textureId) {
         mTextureId = textureId;

@@ -4,9 +4,12 @@ import android.graphics.PointF;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
 import android.opengl.GLSurfaceView;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.Surface;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.mp4extractor.util.GLUtil;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -113,6 +116,12 @@ public class PlayActivity extends AppCompatActivity {
                 mMediaPlayer.start();
             }
         });
+    }
 
+    String videoPath = "";
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void setupMp4Player() {
+        VideoDecoder decoder = new VideoDecoder(mSurface);
+        decoder.startDecoder(videoPath);
     }
 }

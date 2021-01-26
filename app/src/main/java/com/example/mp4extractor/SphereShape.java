@@ -73,7 +73,7 @@ public class SphereShape {
         mMVPHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
         LogU.d("init mTexCoordHandle "+ mTexCoordHandle);
 
-        genVBO2(SECTOR, STACK, RADIUS);
+        genVBO(SECTOR, STACK, RADIUS);
         setPitchOffset(90);
         setYawOffset(0);
     }
@@ -100,7 +100,7 @@ public class SphereShape {
         |  / /
         | / /
         1  ----3*/
-    private void genVBO2(int sectorCount, int stackCount, float radius) {
+    private void genVBO(int sectorCount, int stackCount, float radius) {
         int count = (sectorCount+1) * (stackCount+1);
         ByteBuffer vbb = ByteBuffer.allocateDirect(count * 3 * 4 *6);
         vbb.order(ByteOrder.nativeOrder());

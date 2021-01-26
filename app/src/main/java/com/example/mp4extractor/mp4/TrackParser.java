@@ -45,8 +45,8 @@ import java.util.concurrent.Semaphore;
  *              |           |        |-url
  *              |           |-stbl
  *              |               |-stsd
- *              |               |   |-hvc1
- *              |               |       |-hvcC  (vps, sps, pps, profile, level )
+ *              |               |   |-hvc1/avc1
+ *              |               |       |-hvcC /avcc (vps, sps, pps, profile, level )
  *              |               |-stts (sample time)
  *              |               |-stss (sync frame)
  *              |               |-stsc (sample to chunk)

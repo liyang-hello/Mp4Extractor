@@ -7,15 +7,14 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.Surface;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.mp4extractor.util.GLUtil;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-
+/**
+ * Created by Li Yang on 2021/1/25.
+ */
 public class PlayActivity extends AppCompatActivity {
 
     private GLSurfaceView mSurfaceView = null;
@@ -34,10 +33,9 @@ public class PlayActivity extends AppCompatActivity {
         setupGLSurfaceView();
     }
 
-
     private void setupGLSurfaceView() {
         mSurfaceView.setEGLContextClientVersion(2);
-        mSurfaceView.setEGLConfigChooser(8,8,8,8,8,8);
+        mSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 8, 8);
         mSurfaceView.setRenderer(new GLSurfaceView.Renderer() {
             @Override
             public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
@@ -75,6 +73,7 @@ public class PlayActivity extends AppCompatActivity {
     static final float MAX_PITCH_DEGREES = 90;
     private final PointF previousTouchPointPx = new PointF();
     private final PointF accumulatedTouchOffsetDegrees = new PointF();
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
@@ -83,21 +82,13 @@ public class PlayActivity extends AppCompatActivity {
                 previousTouchPointPx.set(event.getX(), event.getY());
                 return true;
             case MotionEvent.ACTION_MOVE:
-                // Calculate the touch delta in screen space.
                 float touchX = (event.getX() - previousTouchPointPx.x) / PX_PER_DEGREES;
                 float touchY = (event.getY() - previousTouchPointPx.y) / PX_PER_DEGREES;
                 previousTouchPointPx.set(event.getX(), event.getY());
 
-                float r = 0;  // Copy volatile state.
-                float cr = (float) Math.cos(r);
-                float sr = (float) Math.sin(r);
-
-                accumulatedTouchOffsetDegrees.x -= cr * touchX - sr * touchY;
-                // Handle pitch and limit it to 45 degrees.
-                accumulatedTouchOffsetDegrees.y += sr * touchX + cr * touchY;
-                accumulatedTouchOffsetDegrees.y =
-                        Math.max(-MAX_PITCH_DEGREES,
-                                Math.min(MAX_PITCH_DEGREES, accumulatedTouchOffsetDegrees.y));
+                accumulatedTouchOffsetDegrees.x -= touchX;
+                accumulatedTouchOffsetDegrees.y += touchY;
+                accumulatedTouchOffsetDegrees.y = Math.max(-MAX_PITCH_DEGREES, Math.min(MAX_PITCH_DEGREES, accumulatedTouchOffsetDegrees.y));
 
                 mShape.setPitchOffset(accumulatedTouchOffsetDegrees.y);
                 mShape.setYawOffset(accumulatedTouchOffsetDegrees.x);

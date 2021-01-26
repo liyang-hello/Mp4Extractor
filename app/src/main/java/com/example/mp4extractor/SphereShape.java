@@ -3,16 +3,16 @@ package com.example.mp4extractor;
 import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-
 import com.example.mp4extractor.util.GLUtil;
 import com.example.mp4extractor.util.LogU;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
-
+/**
+ * Created by Li Yang on 2021/1/25.
+ */
 public class SphereShape {
 
     int SECTOR = 40;
@@ -151,17 +151,13 @@ public class SphereShape {
         draw(mTextureId);
     }
 
-    private float[] tempMatrix = new float[16];
     private float[] mMVPMatrix = new float[16];
-    private float[] tempMatrix2 = new float[16];
     public void draw(int textureId) {
 //        Log.d("RectShape", "draw "+ textureId);
         GLES20.glUseProgram(mProgram);
 
-//        Matrix.multiplyMM(tempMatrix, 0, mModelMatrix, 0, touchYawMatrix, 0);
-        Matrix.multiplyMM(tempMatrix, 0, touchYawMatrix, 0, touchPitchMatrix, 0);
-        Matrix.multiplyMM(tempMatrix2, 0, mModelMatrix, 0, tempMatrix, 0);
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, tempMatrix2, 0);
+        Matrix.multiplyMM(mModelMatrix, 0, touchYawMatrix, 0, touchPitchMatrix, 0);
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mModelMatrix, 0);
         GLES20.glUniformMatrix4fv(mMVPHandle, 1, false, mMVPMatrix, 0);
 
         if (textureId > 0) {

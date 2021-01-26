@@ -5,9 +5,8 @@ import android.opengl.GLES20;
 import android.util.Log;
 
 /**
- * Created by liyang on 2019/5/5.
+ * Created by Li Yang on 2021/1/25.
  */
-
 public class GLUtil {
 
     public static int generateOESTexture() {

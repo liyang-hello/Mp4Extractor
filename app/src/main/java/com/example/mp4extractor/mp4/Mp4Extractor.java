@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import com.coremedia.iso.IsoFile;
 import com.coremedia.iso.boxes.MovieBox;
 import com.coremedia.iso.boxes.TrackBox;
-import com.example.mp4extractor.LogU;
+import com.example.mp4extractor.util.LogU;
 import com.googlecode.mp4parser.FileDataSourceImpl;
 
 import java.io.File;

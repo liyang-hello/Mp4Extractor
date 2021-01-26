@@ -1,10 +1,10 @@
-package com.example.mp4extractor;
+package com.example.mp4extractor.util;
 import android.util.Log;
 
 import java.util.Objects;
 
 /**
- * Created by luofei on 2017/4/25.
+ * Created by Li Yang on 2017/4/25.
  */
 
 public class LogU {

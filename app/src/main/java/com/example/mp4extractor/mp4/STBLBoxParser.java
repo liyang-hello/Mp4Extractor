@@ -7,7 +7,7 @@ import com.coremedia.iso.boxes.SampleTableBox;
 import com.coremedia.iso.boxes.SampleToChunkBox;
 import com.coremedia.iso.boxes.SyncSampleBox;
 import com.coremedia.iso.boxes.TimeToSampleBox;
-import com.example.mp4extractor.LogU;
+import com.example.mp4extractor.util.LogU;
 
 import java.util.List;
 

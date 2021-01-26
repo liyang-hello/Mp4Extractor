@@ -1,6 +1,5 @@
 package com.example.mp4extractor.mp4;
 import android.media.MediaFormat;
-import android.util.Log;
 
 import com.coremedia.iso.IsoFile;
 import com.coremedia.iso.boxes.HandlerBox;
@@ -13,7 +12,7 @@ import com.coremedia.iso.boxes.TrackHeaderBox;
 import com.coremedia.iso.boxes.sampleentry.AudioSampleEntry;
 import com.coremedia.iso.boxes.sampleentry.SampleEntry;
 import com.coremedia.iso.boxes.sampleentry.VisualSampleEntry;
-import com.example.mp4extractor.LogU;
+import com.example.mp4extractor.util.LogU;
 import com.example.mp4extractor.mp4.codec.AvcCodecConfig;
 import com.example.mp4extractor.mp4.codec.CodecConfig;
 import com.example.mp4extractor.mp4.codec.HevcCodecConfig;

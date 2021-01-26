@@ -1,4 +1,4 @@
-package com.example.mp4extractor;
+package com.example.mp4extractor.util;
 
 import android.Manifest;
 import android.app.Activity;
@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 
 /**
  * Description:
- * Created by liyang on 2019/9/4.
+ * Created by Li Yang on 2019/9/4.
  */
 public class PermissionUtil {
 

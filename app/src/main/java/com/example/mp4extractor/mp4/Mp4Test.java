@@ -3,7 +3,7 @@ package com.example.mp4extractor.mp4;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 
-import com.example.mp4extractor.LogU;
+import com.example.mp4extractor.util.LogU;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

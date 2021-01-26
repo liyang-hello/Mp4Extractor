@@ -2,11 +2,12 @@ package com.example.mp4extractor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.mp4extractor.mp4.Mp4Test;
+import com.example.mp4extractor.util.PermissionUtil;
 
 public class MainActivity extends AppCompatActivity {
     String path = "/sdcard/Test/4kx4kx2streams_pcm.MP4";
@@ -19,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Mp4Test().testMp4Extractor(path);
+//                new Mp4Test().testMp4Extractor(path);
+                startActivity(new Intent(MainActivity.this, PlayActivity.class));
             }
         });
     }

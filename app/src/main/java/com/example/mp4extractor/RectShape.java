@@ -5,6 +5,7 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 
 import com.example.mp4extractor.util.GLUtil;
+import com.example.mp4extractor.util.LogU;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -76,6 +77,7 @@ public class RectShape {
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "a_Position");
         mTexCoordHandle = GLES20.glGetAttribLocation(mProgram, "aTexCoor");
         mMVPHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
+        LogU.d("init mTexCoordHandle "+ mTexCoordHandle);
         //setup buffers for the texture 2D coordinates
         float[] texCoord = new float[]{
                 0.0f, 1.0f,

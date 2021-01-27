@@ -228,7 +228,10 @@ public class TrackParser {
                 ByteBuffer payload = ByteBuffer.wrap(data.array());
                 // create the tag
                 tag = new Tag(type, time, payload.limit(), payload, prevFrameSize);
-//                LogU.d("Read tag - type:" + (type == IoConstants.TYPE_AUDIO ? "Audio" : "Video")+ " body size:"+ tag.getBodySize());
+//                LogU.d("Read tag  body size:"+ tag.getBodySize() );
+//                for(int i=0; i< 10; i++) {
+//                    LogU.d(" i= "+i + " "+ data.get(i));
+//                }
                 // increment the frame number
 //                currentFrame++;
                 // set the frame / tag size
@@ -244,12 +247,12 @@ public class TrackParser {
     }
 
     public boolean advance() {
-        LogU.d(" advance 111 "+ currentFrame);
+//        LogU.d(" advance 111 "+ currentFrame);
         currentFrame ++;
         if(currentFrame >= frames.size()) {
             return false;
         }
-        LogU.d(" advance 222 "+ currentFrame);
+//        LogU.d(" advance 222 "+ currentFrame);
         return true;
     }
 

@@ -117,6 +117,9 @@ public class Mp4Extractor implements IExtractor {
         }
 //        LogU.d("readSampleData end ");
 //        LogU.e("readSampleData///------");
+//        for(int i=0; i< 10; i++) {
+//            LogU.d(" i= "+i + " "+ byteBuf.get(i));
+//        }
         return readSize;
     }
 

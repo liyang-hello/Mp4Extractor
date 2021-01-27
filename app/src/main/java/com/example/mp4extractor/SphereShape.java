@@ -140,7 +140,7 @@ public class SphereShape {
 
     public void setSurfaceSize(int with, int height) {
         float ratio = (float) with/height;
-        Matrix.perspectiveM(mProjectionMatrix, 0, 70, ratio, 0.1f, 100);
+        Matrix.perspectiveM(mProjectionMatrix, 0, 80, ratio, 0.1f, 100);
     }
 
     public void setTextureId(int textureId) {

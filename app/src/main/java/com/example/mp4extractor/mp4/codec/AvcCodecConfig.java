@@ -29,10 +29,12 @@ public class AvcCodecConfig extends CodecConfig {
         csd_0 = ByteBuffer.allocate(csd0_size+4);
         csd_0.put(CODEC_PREFIX);
         csd_0.put(avc1.getSequenceParameterSets().get(0));
+        csd_0.position(0);
         int csd1_size = avc1.getPictureParameterSets().get(0).length;
         csd_1 = ByteBuffer.allocate(csd1_size+4);
         csd_1.put(CODEC_PREFIX);
         csd_1.put(avc1.getPictureParameterSets().get(0));
+        csd_1.position(0);
         format.setByteBuffer("csd-0", csd_0);
         format.setByteBuffer("csd-1", csd_1);
 

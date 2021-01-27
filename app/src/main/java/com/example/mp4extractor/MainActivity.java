@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.mp4extractor.mp4.Mp4Test;
 import com.example.mp4extractor.util.PermissionUtil;
 
 public class MainActivity extends AppCompatActivity {
-    String path = "/sdcard/Test/4kx4kx2streams_pcm.MP4";
+    String path = "/sdcard/testvideo_mono.mp4";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -11,6 +11,9 @@ import android.view.Surface;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.example.mp4extractor.mp4.Mp4Extractor;
+import com.example.mp4extractor.util.LogU;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
@@ -22,7 +25,7 @@ public class VideoDecoder {
     private MediaCodec mMediaCodec;
     private MediaFormat mMediaFormat;
     private Surface mSurface;
-    private MediaExtractor mExtractor = null;
+    private Mp4Extractor mExtractor = null;
     private Handler mVideoDecoderHandler;
     private HandlerThread mVideoDecoderHandlerThread = new HandlerThread("VideoDecoder");
 
@@ -37,8 +40,15 @@ public class VideoDecoder {
             ByteBuffer inputBuffer = mediaCodec.getInputBuffer(id);
             inputBuffer.clear();
             int length = mExtractor.readSampleData(inputBuffer, 0);
-            mediaCodec.queueInputBuffer(id, 0, length, mExtractor.getSampleTime(), 0);
-            mExtractor.advance();
+            if(length >0) {
+//                for(int i=0; i< 10; i++) {
+//                     LogU.d(" i= "+i + " "+ inputBuffer.get(i));
+//                }
+                Log.d(TAG, "id= "+ id + " len= "+ length + " timestamp= "+ mExtractor.getSampleTime());
+                mediaCodec.queueInputBuffer(id, 0, length, mExtractor.getSampleTime(), 0);
+                mExtractor.advance();
+            }
+
         }
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -72,23 +82,42 @@ public class VideoDecoder {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void startDecoder(String path) {
-        mExtractor = new MediaExtractor();
+        mExtractor = new Mp4Extractor();
         try {
             mExtractor.setDataSource(path);
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
-
+        LogU.d("trackCount  "+ mExtractor.getTrackCount());
         String mimeType = null;
         for (int i=0; i<mExtractor.getTrackCount(); i++) {
             MediaFormat format = mExtractor.getTrackFormat(i);
+            LogU.d("format "+ format);
             if(format.getString(MediaFormat.KEY_MIME).startsWith("video")) {
                 mMediaFormat = format;
                 mimeType = format.getString(MediaFormat.KEY_MIME);
+                mExtractor.selectTrack(i);
                 break;
             }
         }
+
+//        MediaExtractor extractor = new MediaExtractor();
+//        try {
+//            extractor.setDataSource(path);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return;
+//        }
+//        LogU.d("trackCount  "+ extractor.getTrackCount());
+//        for (int i=0; i<extractor.getTrackCount(); i++) {
+//            MediaFormat format = extractor.getTrackFormat(i);
+//            LogU.d("22 format "+ format);
+//            if(format.getString(MediaFormat.KEY_MIME).startsWith("video")) {
+//                mMediaFormat = format;
+//                break;
+//            }
+//        }
 
         if(mimeType == null) {
             Log.e(TAG, "has no video track");
@@ -112,7 +141,7 @@ public class VideoDecoder {
         }
     }
 
-    public void stopDecoder() {
+    public void stop() {
         if (mMediaCodec != null) {
             mMediaCodec.stop();
         }
@@ -125,6 +154,10 @@ public class VideoDecoder {
         if (mMediaCodec != null) {
             mMediaCodec.release();
             mMediaCodec = null;
+        }
+
+        if(mExtractor != null) {
+            mExtractor.release();
         }
     }
 }

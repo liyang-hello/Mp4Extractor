@@ -24,8 +24,14 @@ public class Mp4Test {
                 ByteBuffer csd_0 = mediaFormat.getByteBuffer("csd-0");
                 if(csd_0 != null) {
                     String buf = bytesToHex(csd_0.array(), csd_0.limit());
-                    LogU.d("track id "+ i+ " buf "+ buf);
+                    LogU.d("track id csd_0 "+ i+ " buf "+ buf);
                 }
+                ByteBuffer csd_1 = mediaFormat.getByteBuffer("csd-1");
+                if(csd_0 != null) {
+                    String buf = bytesToHex(csd_1.array(), csd_1.limit());
+                    LogU.d("track id csd_1 "+ i+ " buf "+ buf);
+                }
+
 
             }
         } catch (IOException e) {
@@ -46,6 +52,12 @@ public class Mp4Test {
                         if(csd_0 != null) {
                             String buf = bytesToHex(csd_0.array(), csd_0.limit());
                             LogU.d("track id "+ i+ " buf "+ buf);
+                        }
+
+                        ByteBuffer csd_1 = format.getByteBuffer("csd-1");
+                        if(csd_0 != null) {
+                            String buf = bytesToHex(csd_1.array(), csd_1.limit());
+                            LogU.d("track id csd_1 "+ i+ " buf "+ buf);
                         }
 
                         extractor.selectTrack(i);
@@ -127,3 +139,7 @@ public class Mp4Test {
         return new String(hexChars);
     }
 }
+//000000016742C028D90078079A10000003001000000303C0F1832480
+//000000016742C028D90078079A10000003001000000303C0F1832480
+//0000000168CB83CB20
+//0000000168CB83CB20

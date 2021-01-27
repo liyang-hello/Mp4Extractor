@@ -22,7 +22,8 @@ public class PlayActivity extends AppCompatActivity {
 
     private GLSurfaceView mSurfaceView = null;
     private SphereShape mShape = null;
-    private MediaPlayer mMediaPlayer = null;
+//    private MediaPlayer mMediaPlayer = null;
+    private VideoDecoder mMediaPlayer = null;
     private Surface mSurface = null;
     private SurfaceTexture mSurfaceTexture = null;
 
@@ -53,7 +54,8 @@ public class PlayActivity extends AppCompatActivity {
                 });
                 mSurface = new Surface(mSurfaceTexture);
                 mShape.setTextureId(textureId);
-                setupPlayer();
+//                setupPlayer();
+                setupMp4Player();
             }
 
             @Override
@@ -101,27 +103,38 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    private void setupPlayer() {
-        try {
-            mMediaPlayer = MediaPlayer.create(this, R.raw.testvideo_mono);
-            mMediaPlayer.setSurface(mSurface);
-            mMediaPlayer.setLooping(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mMediaPlayer.start();
-            }
-        });
+        if(mMediaPlayer != null) {
+            mMediaPlayer.stop();
+            mMediaPlayer.release();
+        }
     }
 
-    String videoPath = "";
+//    private void setupPlayer() {
+//        try {
+//            mMediaPlayer = MediaPlayer.create(this, R.raw.testvideo_mono);
+//            mMediaPlayer.setSurface(mSurface);
+//            mMediaPlayer.setLooping(true);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mediaPlayer) {
+//                mMediaPlayer.start();
+//            }
+//        });
+//    }
+
+    String videoPath = "/sdcard/testvideo_mono.mp4";
+//    String videoPath = "/sdcard/ride2.mp4";
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void setupMp4Player() {
-        VideoDecoder decoder = new VideoDecoder(mSurface);
-        decoder.startDecoder(videoPath);
+        mMediaPlayer = new VideoDecoder(mSurface);
+        mMediaPlayer.startDecoder(videoPath);
     }
 }

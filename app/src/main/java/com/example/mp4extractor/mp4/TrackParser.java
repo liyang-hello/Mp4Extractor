@@ -191,7 +191,7 @@ public class TrackParser {
     }
 
     public Tag readTag() {
-        LogU.d("readTag currentFrame "+ currentFrame + " track-id " +mTrackId+" frames.size() "+ frames.size());
+//        LogU.d("readTag currentFrame "+ currentFrame + " track-id " +mTrackId+" frames.size() "+ frames.size());
         Tag tag = null;
         if(currentFrame >= frames.size()) {
             return tag;
@@ -228,12 +228,6 @@ public class TrackParser {
                 ByteBuffer payload = ByteBuffer.wrap(data.array());
                 // create the tag
                 tag = new Tag(type, time, payload.limit(), payload, prevFrameSize);
-//                LogU.d("Read tag  body size:"+ tag.getBodySize() );
-//                for(int i=0; i< 10; i++) {
-//                    LogU.d(" i= "+i + " "+ data.get(i));
-//                }
-                // increment the frame number
-//                currentFrame++;
                 // set the frame / tag size
                 prevFrameSize = tag.getBodySize();
             }

@@ -130,8 +130,8 @@ public class PlayActivity extends AppCompatActivity {
 //        });
 //    }
 
-    String videoPath = "/sdcard/testvideo_mono.mp4";
-//    String videoPath = "/sdcard/ride2.mp4";
+//    String videoPath = "/sdcard/testvideo_mono.mp4";
+    String videoPath = "/sdcard/ride2.mp4";
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void setupMp4Player() {
         mMediaPlayer = new VideoDecoder(mSurface);

@@ -42,7 +42,6 @@ public class SphereShape {
                     "attribute vec4 a_Position;\n" +
                     "attribute vec2 aTexCoor;\n" +
                     "varying vec2 vTextureCoord;\n" +
-                    "uniform float uAngle;\n" +
                     "void main(){\n" +
                     "    gl_Position = uMVPMatrix * a_Position;\n" +
                     "    vTextureCoord = aTexCoor;\n" +
@@ -154,12 +153,13 @@ public class SphereShape {
     }
 
     private float[] mMVPMatrix = new float[16];
+    private float[] mModelViewMatrix = new float[16];
     public void draw(int textureId) {
-//        Log.d("RectShape", "draw "+ textureId);
         GLES20.glUseProgram(mProgram);
 
         Matrix.multiplyMM(mModelMatrix, 0, touchYawMatrix, 0, touchPitchMatrix, 0);
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mModelMatrix, 0);
+        Matrix.multiplyMM(mModelViewMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mModelViewMatrix, 0);
         GLES20.glUniformMatrix4fv(mMVPHandle, 1, false, mMVPMatrix, 0);
 
         if (textureId > 0) {

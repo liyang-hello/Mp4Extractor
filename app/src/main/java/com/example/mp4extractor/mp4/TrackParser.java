@@ -173,7 +173,6 @@ public class TrackParser {
         if(mSTBLBoxParser != null) {
             frames.clear();
             for (int i = 1; i<mSTBLBoxParser.getChunkCount()+1; i++) {
-                //create a frame
                 MP4Frame frame = new MP4Frame();
                 frame.setKeyFrame(mSTBLBoxParser.isKeyFrame(i));
                 frame.setOffset(mSTBLBoxParser.getChunkOffset(i));
@@ -185,7 +184,6 @@ public class TrackParser {
                     frame.setType(IoConstants.TYPE_AUDIO);
                 }
                 frames.add(frame);
-//                LogU.d("prepareFramesInfo i="+i+" frame  "+ frame);
             }
         }
     }

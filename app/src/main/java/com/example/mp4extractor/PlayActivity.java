@@ -93,7 +93,8 @@ public class PlayActivity extends AppCompatActivity {
 
                 accumulatedTouchOffsetDegrees.x -= touchX;
                 accumulatedTouchOffsetDegrees.y += touchY;
-                accumulatedTouchOffsetDegrees.y = Math.max(-MAX_PITCH_DEGREES, Math.min(MAX_PITCH_DEGREES, accumulatedTouchOffsetDegrees.y));
+                accumulatedTouchOffsetDegrees.y = Math.max(-MAX_PITCH_DEGREES,
+                        Math.min(MAX_PITCH_DEGREES, accumulatedTouchOffsetDegrees.y));
 
                 mShape.setPitchOffset(accumulatedTouchOffsetDegrees.y);
                 mShape.setYawOffset(accumulatedTouchOffsetDegrees.x);

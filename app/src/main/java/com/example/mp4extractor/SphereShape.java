@@ -27,6 +27,7 @@ public class SphereShape {
     private FloatBuffer mVertices, mTexCoord;
     private ShortBuffer mIndices;
     private float[] mModelMatrix = new float[16];
+    private float[] mViewMatrix = new float[16];
     private float[] mProjectionMatrix = new float[16];
     private final float[] touchPitchMatrix = new float[16];
     private final float[] touchYawMatrix = new float[16];
@@ -66,6 +67,7 @@ public class SphereShape {
         Matrix.setIdentityM(mModelMatrix, 0);
         float ratio = 9.0f/16;
         Matrix.perspectiveM(mProjectionMatrix, 0, 70, ratio, 0.1f, 100);
+        Matrix.setLookAtM(mViewMatrix, 0, 0,0,0, 0, 0,-1, 0,1,0);
         // create program
         mProgram = GLUtil.createProgram(VERTEX_SHADER, FRAGMENT_SHADER);
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "a_Position");

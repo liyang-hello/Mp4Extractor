@@ -41,9 +41,6 @@ public class VideoDecoder {
             inputBuffer.clear();
             int length = mExtractor.readSampleData(inputBuffer, 0);
             if(length >0) {
-//                for(int i=0; i< 10; i++) {
-//                     LogU.d(" i= "+i + " "+ inputBuffer.get(i));
-//                }
                 Log.d(TAG, "id= "+ id + " len= "+ length + " timestamp= "+ mExtractor.getSampleTime());
                 mediaCodec.queueInputBuffer(id, 0, length, mExtractor.getSampleTime(), 0);
                 mExtractor.advance();
@@ -101,24 +98,6 @@ public class VideoDecoder {
                 break;
             }
         }
-
-//        MediaExtractor extractor = new MediaExtractor();
-//        try {
-//            extractor.setDataSource(path);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return;
-//        }
-//        LogU.d("trackCount  "+ extractor.getTrackCount());
-//        for (int i=0; i<extractor.getTrackCount(); i++) {
-//            MediaFormat format = extractor.getTrackFormat(i);
-//            LogU.d("22 format "+ format);
-//            if(format.getString(MediaFormat.KEY_MIME).startsWith("video")) {
-//                mMediaFormat = format;
-//                break;
-//            }
-//        }
-
         if(mimeType == null) {
             Log.e(TAG, "has no video track");
             return;
